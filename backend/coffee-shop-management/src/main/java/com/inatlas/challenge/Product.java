@@ -3,6 +3,7 @@ package com.inatlas.challenge;
 public class Product {
     private String name;
     private Integer qtt;
+    private Integer discountQtt = 0;
     private boolean discount;
 
     public Product(String name, Integer qtt) {
@@ -12,11 +13,21 @@ public class Product {
 
     @Override
     public String toString() {
-        return name + " " + getPrice();
+        StringBuilder sb = new StringBuilder(name + "  " + getPrice());
+
+        if (discount || discountQtt>0) {
+            sb.append("\n\t (Discount ").append(discountQtt).append(" ").append(name).append(")");
+        }
+
+        return sb.toString();
     }
 
     public Integer getQtt() {
         return qtt;
+    }
+
+    public Integer getdiscountQtt() {
+        return discountQtt;
     }
 
     public String getName() {
@@ -24,7 +35,8 @@ public class Product {
     }
 
     public String getPrice() {
-        if (discount) {
+
+        if (this.discount) {
             return "$ 0.0";
         }
 
@@ -42,5 +54,9 @@ public class Product {
 
     public void setDiscount(boolean discount) {
         this.discount = discount;
+    }
+
+    public void setDiscountQtt(int discountQtt) {
+        this.discountQtt = discountQtt;
     }
 }

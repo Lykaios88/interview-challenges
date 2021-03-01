@@ -49,4 +49,28 @@ public class CoffeeShopTest {
         coffeeShop.printReceipt();
         // Total should be $18.1
     }
+
+    @Test
+    public void testTakeMyFifthOrder(){
+        CoffeeShop coffeeShop = new CoffeeShop();
+        coffeeShop.printMenu();
+        coffeeShop.takeOrder("Latte", 4);
+        coffeeShop.takeOrder("Espresso", 1);
+        coffeeShop.takeOrder("Espresso", 1);
+        coffeeShop.takeOrder("Sandwich", 1);
+        coffeeShop.printReceipt();
+        // Total should be $18.1
+    }
+
+    @Test
+    public void testTakeMySixthOrder(){
+        CoffeeShop coffeeShop = new CoffeeShop();
+        coffeeShop.printMenu();
+        coffeeShop.takeOrder("Latte", 4);
+        coffeeShop.takeOrder("Espresso", 1);
+        coffeeShop.takeOrder("Espresso", 2);
+        coffeeShop.takeOrder("Sandwich", 1);
+        coffeeShop.printReceipt();
+        // Total should be $18.1
+    }
 }
