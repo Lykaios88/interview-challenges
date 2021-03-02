@@ -2,6 +2,9 @@ package com.inatlas.challenge;
 
 import org.junit.Test;
 
+import static org.hamcrest.core.Is.is;
+import static org.junit.Assert.assertThat;
+
 public class CoffeeShopTest {
     
     @Test
@@ -12,6 +15,7 @@ public class CoffeeShopTest {
         coffeeShop.takeOrder("Espresso", 1);
         coffeeShop.takeOrder("Sandwich", 1);
         coffeeShop.printReceipt();
+        assertThat(coffeeShop.getTotalOrderPrice(),is(19.4) );
         // Total should be $18.1
     }
 
@@ -23,6 +27,7 @@ public class CoffeeShopTest {
         coffeeShop.takeOrder("Espresso", 1);
         coffeeShop.takeOrder("Sandwich", 1);
         coffeeShop.printReceipt();
+        assertThat(coffeeShop.getTotalOrderPrice(),is(20.7) );
         // Total should be $15.1
     }
 
@@ -35,6 +40,7 @@ public class CoffeeShopTest {
         coffeeShop.takeOrder("Espresso", 1);
         coffeeShop.takeOrder("Sandwich", 1);
         coffeeShop.printReceipt();
+        assertThat(coffeeShop.getTotalOrderPrice(),is(20.7) );
         // Total should be $15.1
     }
 
@@ -47,6 +53,7 @@ public class CoffeeShopTest {
         coffeeShop.takeOrder("Espresso", 1);
         coffeeShop.takeOrder("Sandwich", 1);
         coffeeShop.printReceipt();
+        assertThat(coffeeShop.getTotalOrderPrice(),is(24.7) );
         // Total should be $18.1
     }
 
@@ -54,11 +61,13 @@ public class CoffeeShopTest {
     public void testTakeMyFifthOrder(){
         CoffeeShop coffeeShop = new CoffeeShop();
         coffeeShop.printMenu();
-        coffeeShop.takeOrder("Latte", 4);
         coffeeShop.takeOrder("Espresso", 1);
         coffeeShop.takeOrder("Espresso", 1);
+        coffeeShop.takeOrder("Latte", 2);
+        coffeeShop.takeOrder("Latte", 3);
         coffeeShop.takeOrder("Sandwich", 1);
         coffeeShop.printReceipt();
+        assertThat(coffeeShop.getTotalOrderPrice(),is(36.6) );
         // Total should be $18.1
     }
 
@@ -71,6 +80,7 @@ public class CoffeeShopTest {
         coffeeShop.takeOrder("Espresso", 2);
         coffeeShop.takeOrder("Sandwich", 1);
         coffeeShop.printReceipt();
+        assertThat(coffeeShop.getTotalOrderPrice(),is(35.3) );
         // Total should be $18.1
     }
 }

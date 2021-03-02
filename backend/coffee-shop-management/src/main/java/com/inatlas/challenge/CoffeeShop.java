@@ -6,6 +6,8 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class CoffeeShop {
     private List<Product> orders = new ArrayList<>();
+    private double totalOrderPrice;
+
     public void takeOrder(String product, Integer qtt) {
         this.orders.add(new Product(product, qtt));
     }
@@ -31,17 +33,22 @@ public class CoffeeShop {
             });
         }
 
-        Double total = this.orders.stream().map(p -> {
+         this.totalOrderPrice = this.orders.stream().map(p -> {
             System.out.println(p.getQtt()+" X "+ p);
             return Double.parseDouble(p.getPrice().split("\\$")[1])*(p.getQtt()- p.getdiscountQtt());
         }).reduce(0.0, Double::sum);
 
+
         System.out.println("----------------");
-        System.out.println("Total: $" + total);
+        System.out.println("Total: $" + this.totalOrderPrice);
         System.out.println("======================================");
     }
 
     public void printMenu() {
         // Print whole menu
+    }
+
+    public double getTotalOrderPrice() {
+        return totalOrderPrice;
     }
 }
