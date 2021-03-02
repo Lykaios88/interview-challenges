@@ -2,13 +2,21 @@ package com.inatlas.challenge;
 
 public class Product {
     private String name;
-    private Integer qtt;
-    private Integer discountQtt = 0;
+    private int qtt;
+    private int discountQtt = 0;
+    private String price;
     private boolean discount;
 
-    public Product(String name, Integer qtt) {
+    public Product(String name, int qtt, String price) {
         this.name = name;
         this.qtt = qtt;
+        this.price = price;
+    }
+
+    public Product(String name, String price) {
+        this.name = name;
+        this.price = price;
+        this.qtt = 1;
     }
 
     @Override
@@ -22,11 +30,11 @@ public class Product {
         return sb.toString();
     }
 
-    public Integer getQtt() {
+    public int getQtt() {
         return qtt;
     }
 
-    public Integer getdiscountQtt() {
+    public int getdiscountQtt() {
         return discountQtt;
     }
 
@@ -35,21 +43,11 @@ public class Product {
     }
 
     public String getPrice() {
+        return discount?"$ 0.0":price;
+    }
 
-        if (this.discount) {
-            return "$ 0.0";
-        }
-
-        if ("Sandwich".equals(this.name)) {
-            return "$ 10.10";
-        }
-        if ("Latte".equals(this.name)) {
-            return "$ 5.3";
-        }
-        if ("Espresso".equals(this.name)) {
-            return "$ 4";
-        }
-        return "";
+    public void setPrice(String price) {
+        this.price = price;
     }
 
     public void setDiscount(boolean discount) {

@@ -1,20 +1,30 @@
 package com.inatlas.challenge;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class CoffeeShop {
     private List<Product> orders = new ArrayList<>();
+    private List<Product> priceList;
     private double totalOrderPrice;
 
+    public CoffeeShop() {
+        this.priceList = Arrays.asList(new Product("Latte", "$ 5.3"),
+                                  new Product("Espresso", "$ 4"),
+                                  new Product("Sandwich", "$ 10.10"));
+    }
+
     public void takeOrder(String product, Integer qtt) {
-        this.orders.add(new Product(product, qtt));
+        this.orders.add(new Product(product, qtt, getPrice(product)));
+    }
+
+    public String getPrice (String name){
+        return this.priceList.stream().filter(p -> p.getName().equals(name)).findAny().map(Product::getPrice).orElse("");
     }
 
     public void printReceipt() {
         System.out.println("======================================");
-        int totalLattte = this.orders.stream().parallel().filter(p -> p.getName().equals("Latte")).mapToInt(Product::getQtt).sum();
+        int totalLattte = this.orders.stream().filter(p -> p.getName().equals("Latte")).mapToInt(Product::getQtt).sum();
         AtomicInteger totalFreeEspresso = new AtomicInteger (totalLattte/2);
 
         if (totalFreeEspresso.get() > 0) {
@@ -45,6 +55,10 @@ public class CoffeeShop {
     }
 
     public void printMenu() {
+        System.out.println("********** PRICE LIST ****************");
+        System.out.println("Product Name \t | \t Price");
+        priceList.forEach( p -> System.out.println (p.getName()+" \t "+ p.getPrice()));
+        System.out.println("**************************************");
         // Print whole menu
     }
 
