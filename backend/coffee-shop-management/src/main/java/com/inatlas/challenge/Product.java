@@ -21,7 +21,7 @@ public class Product {
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder(name + "  " + getPrice());
+        StringBuilder sb = new StringBuilder(name + " $ " + getPriceToDouble()*qtt);
 
         if (discount || discountQtt>0) {
             sb.append("\n\t (Discount ").append(discountQtt).append(" ").append(name).append(")");
@@ -44,6 +44,10 @@ public class Product {
 
     public String getPrice() {
         return discount?"$ 0.0":price;
+    }
+
+    public Double getPriceToDouble (){
+        return Double.parseDouble(price.split("\\$")[1]);
     }
 
     public void setPrice(String price) {

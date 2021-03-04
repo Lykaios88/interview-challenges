@@ -83,4 +83,30 @@ public class CoffeeShopTest {
         assertThat(coffeeShop.getTotalOrderPrice(),is(35.3) );
         // Total should be $18.1
     }
+
+    @Test
+    public void testTakeMySeventhOrder(){
+        CoffeeShop coffeeShop = new CoffeeShop();
+        coffeeShop.printMenu();
+        coffeeShop.takeOrder("Latte", 1);
+        coffeeShop.takeOrder("Espresso", 1);
+        coffeeShop.takeOrder("Espresso", 2);
+        coffeeShop.takeOrder("Sandwich", 5);
+        coffeeShop.printReceipt();
+        assertThat(coffeeShop.getTotalOrderPrice(),is(64.41) );
+        // Total should be $18.1
+    }
+
+    @Test
+    public void testTakeMyEighthOrder(){
+        CoffeeShop coffeeShop = new CoffeeShop();
+        coffeeShop.printMenu();
+        coffeeShop.takeOrder("Latte", 4);
+        coffeeShop.takeOrder("Espresso", 1);
+        coffeeShop.takeOrder("Espresso", 2);
+        coffeeShop.takeOrder("Sandwich", 5);
+        coffeeShop.printReceipt();
+        assertThat(coffeeShop.getTotalOrderPrice(),is(75.7) );
+        // Total should be $18.1
+    }
 }
