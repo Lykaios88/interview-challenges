@@ -6,7 +6,6 @@ import java.util.*;
 
 public class CoffeeShop {
 
-
     private List<Product> orders = new ArrayList<>();
     private PriceList priceList;
     private double totalOrderPrice;
@@ -15,6 +14,10 @@ public class CoffeeShop {
         this.priceList = new PriceList(Arrays.asList(new Product("Latte", "$ 5.3"),
                                                      new Product("Espresso", "$ 4"),
                                                      new Product("Sandwich", "$ 10.10")));
+    }
+
+    public void addProductList (List<Product> priceList){
+        this.priceList.addPriceList(priceList);
     }
 
     public void takeOrder(String product, Integer qtt) {
@@ -43,7 +46,7 @@ public class CoffeeShop {
     }
 
     public void printMenu() {
-        this.priceList.priceListMenu();
+        this.priceList.showPriceListMenu();
     }
 
     public double getTotalOrderPrice() {

@@ -2,6 +2,8 @@ package com.inatlas.challenge;
 
 import org.junit.Test;
 
+import java.util.Arrays;
+
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 
@@ -107,6 +109,25 @@ public class CoffeeShopTest {
         coffeeShop.takeOrder("Sandwich", 5);
         coffeeShop.printReceipt();
         assertThat(coffeeShop.getTotalOrderPrice(),is(75.7) );
+        // Total should be $18.1
+    }
+
+    @Test
+    public void testTakeMyNinthOrder(){
+        CoffeeShop coffeeShop = new CoffeeShop();
+        coffeeShop.addProductList(Arrays.asList(new Product("Capuccino", "$ 8"),
+                                                new Product("Tea", "$ 6.1"),
+                                                new Product("Cake Slice", "$ 9"),
+                                                new Product("Milk", "$ 1")));
+        coffeeShop.printMenu();
+        coffeeShop.takeOrder("Latte", 4);
+        coffeeShop.takeOrder("Espresso", 1);
+        coffeeShop.takeOrder("Espresso", 2);
+        coffeeShop.takeOrder("Sandwich", 5);
+        coffeeShop.takeOrder("Cake Slice", 1);
+        coffeeShop.takeOrder("Capuccino", 1);
+        coffeeShop.printReceipt();
+        assertThat(coffeeShop.getTotalOrderPrice(),is(92.7) );
         // Total should be $18.1
     }
 }
