@@ -106,9 +106,9 @@ public class CoffeeShopTest {
         coffeeShop.takeOrder("Latte", 4);
         coffeeShop.takeOrder("Espresso", 1);
         coffeeShop.takeOrder("Espresso", 2);
-        coffeeShop.takeOrder("Sandwich", 5);
+        coffeeShop.takeOrder("Sandwich", 1);
         coffeeShop.printReceipt();
-        assertThat(coffeeShop.getTotalOrderPrice(),is(75.7) );
+        assertThat(coffeeShop.getTotalOrderPrice(),is(35.3) );
         // Total should be $18.1
     }
 
@@ -119,6 +119,12 @@ public class CoffeeShopTest {
                                                 new Product("Tea", "$ 6.1"),
                                                 new Product("Cake Slice", "$ 9"),
                                                 new Product("Milk", "$ 1")));
+/*
+        coffeeShop.addProductList(Arrays.asList(new Product("Capuccino", "$ 8"),
+                new Product("Tea", "$ 6.1"),
+                new Product("Cake Slice", "$ 9"),
+                new Product("Milk", "$ 1")));
+*/
         coffeeShop.printMenu();
         coffeeShop.takeOrder("Latte", 4);
         coffeeShop.takeOrder("Espresso", 1);
@@ -127,7 +133,33 @@ public class CoffeeShopTest {
         coffeeShop.takeOrder("Cake Slice", 1);
         coffeeShop.takeOrder("Capuccino", 1);
         coffeeShop.printReceipt();
-        assertThat(coffeeShop.getTotalOrderPrice(),is(92.7) );
+        assertThat(coffeeShop.getTotalOrderPrice(),is(91.5) );
+        // Total should be $18.1
+    }
+
+    @Test
+    public void testTakeMyTenthOrder(){
+        CoffeeShop coffeeShop = new CoffeeShop();
+
+        coffeeShop.addProductList(Arrays.asList(new Product("Capuccino", "$ 8"),
+                new Product("Tea", "$ 6.1"),
+                new Product("Cake Slice", "$ 9"),
+                new Product("Milk", "$ 1")));
+/*
+        PriceList.addPriceList(Arrays.asList(new Product("Capuccino", "$ 8"),
+                new Product("Tea", "$ 6.1"),
+                new Product("Cake Slice", "$ 9"),
+                new Product("Milk", "$ 1")));
+*/
+        coffeeShop.printMenu();
+        coffeeShop.takeOrder("Latte", 4);
+        //coffeeShop.takeOrder("Espresso", 1);
+        //coffeeShop.takeOrder("Espresso", 2);
+        coffeeShop.takeOrder("Sandwich", 5);
+        coffeeShop.takeOrder("Cake Slice", 1);
+        coffeeShop.takeOrder("Capuccino", 1);
+        coffeeShop.printReceipt();
+        assertThat(coffeeShop.getTotalOrderPrice(),is(79.5) );
         // Total should be $18.1
     }
 }

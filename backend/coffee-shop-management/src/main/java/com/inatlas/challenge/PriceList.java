@@ -5,25 +5,26 @@ import java.util.List;
 import java.util.Optional;
 
 public class PriceList {
-    private List<Product> priceListMenu = new ArrayList<>();
 
-    public PriceList(List<Product> priceList) {
-        this.priceListMenu.addAll(priceList);
+    private List<Product> priceListMenu;
+
+    PriceList(List<Product> priceList) {
+        priceListMenu = new ArrayList<>(priceList);
     }
 
     public void addPriceList(List<Product> priceList) {
-        this.priceListMenu.addAll(priceList);
+        priceListMenu.addAll(priceList);
     }
 
     public String getPriceToString (String name){
-        return this.priceListMenu.stream()
+        return priceListMenu.stream()
                                  .filter(p -> p.getName().equals(name))
                                  .findAny().map(Product::getPrice).orElse("");
     }
 
     public double getPriceToDouble (String name){
-        Optional<Product> product = this.priceListMenu.stream().filter(p -> p.getName().equals(name)).findAny();
-        return product.isPresent() ? Double.parseDouble(product.get().getPrice().split("\\$")[1]): 0.0;
+        Optional<Product> product = priceListMenu.stream().filter(p -> p.getName().equals(name)).findAny();
+        return product.map(value -> Double.parseDouble(value.getPrice().split("\\$")[1])).orElse(0.0);
     }
 
     public void showPriceListMenu(){

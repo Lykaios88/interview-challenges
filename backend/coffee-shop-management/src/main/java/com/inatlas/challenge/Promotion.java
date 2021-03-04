@@ -9,13 +9,14 @@ public class Promotion {
     private double totalOrderPriceDiscount = 0;
     private List<String> promotionDiscount = new ArrayList<>();
 
-    public void applyPromotions(List<Product> orders, PriceList priceList, double totalOrderPrice) {
-        this.totalOrderPrice = totalOrderPrice;
+    public void applyPromotions(List<Product> orders, PriceList priceList) {
+        this.totalOrderPrice = orders.stream().map(p -> Double.parseDouble(p.getPrice().split("\\$")[1])*(p.getQtt())).reduce(0.0, Double::sum);
         promotionEspresso(orders, priceList);
         promotionPercentDiscount(orders, 5);
+        promotionDrinksAndFood(orders, priceList, 3);
     }
 
-    public void promotionEspresso (List<Product> orders, PriceList priceList){
+    private void promotionEspresso (List<Product> orders, PriceList priceList){
 
         int totalLattte  = orders.stream().filter(p -> p.getName().equals("Latte")).mapToInt(Product::getQtt).sum();
         int totalEspreso = orders.stream().filter(p -> p.getName().equals("Espresso")).mapToInt(Product::getQtt).sum();
@@ -29,7 +30,7 @@ public class Promotion {
         setPromotionDiscount(discount, "Discount "+totalFreeEspresso+" Expresso");
     }
 
-    public void promotionPercentDiscount (List<Product> orders, int percent){
+    private void promotionPercentDiscount (List<Product> orders, int percent){
 
         int totalProducts = orders.stream().mapToInt(Product::getQtt).sum();
         if (totalProducts > 8)
@@ -38,10 +39,22 @@ public class Promotion {
         }
     }
 
+    private void promotionDrinksAndFood (List<Product> orders, PriceList priceList, double priceDiscount){
+        if ( totalOrderPrice > 50){
+            boolean haveFood = orders.stream().anyMatch(p -> p.getProductType().equals("food"));
+            boolean haveDrink = orders.stream().anyMatch(p -> p.getProductType().equals("drink"));
+            if (haveFood && haveDrink){
+                int totalLattte  = orders.stream().filter(p -> p.getName().equals("Latte")).mapToInt(Product::getQtt).sum();
+                Double totalDiscount = (priceList.getPriceToDouble("Latte") - priceDiscount)* totalLattte;
+                setPromotionDiscount(totalDiscount, "Discount $ "+ totalDiscount+" new price Latte: "+priceDiscount);
+            }
+        }
+    }
+
     private void setPromotionDiscount (double discount, String descriptionDiscount){
         if (discount > totalOrderPriceDiscount){
             totalOrderPriceDiscount = discount;
-            promotionDiscount.add(descriptionDiscount);
+            promotionDiscount.add(0, descriptionDiscount);
         }
     }
 

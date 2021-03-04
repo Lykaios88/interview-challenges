@@ -6,15 +6,11 @@ import java.util.*;
 
 public class CoffeeShop {
 
-    private List<Product> orders = new ArrayList<>();
-    private PriceList priceList;
     private double totalOrderPrice;
-
-    public CoffeeShop() {
-        this.priceList = new PriceList(Arrays.asList(new Product("Latte", "$ 5.3"),
-                                                     new Product("Espresso", "$ 4"),
-                                                     new Product("Sandwich", "$ 10.10")));
-    }
+    private List<Product> orders = new ArrayList<>();
+    private PriceList priceList = new PriceList(Arrays.asList( new Product("Latte", "$ 5.3"),
+                                                               new Product("Espresso", "$ 4"),
+                                                               new Product("Sandwich", "$ 10.10")));
 
     public void addProductList (List<Product> priceList){
         this.priceList.addPriceList(priceList);
@@ -28,17 +24,12 @@ public class CoffeeShop {
         System.out.println("======================================");
 
         Promotion promotion = new Promotion();
-        this.totalOrderPrice = this.orders.stream().map(p -> Double.parseDouble(p.getPrice().split("\\$")[1])*(p.getQtt())).reduce(0.0, Double::sum);
-
-        promotion.applyPromotions( this.orders, this.priceList, totalOrderPrice);
+        promotion.applyPromotions(this.orders, priceList);
 
         this.orders.forEach(p -> System.out.println(p.getQtt()+" "+ p));
-
         promotion.showAppliedPromotions();
 
-        double discount = promotion.totalOrderPriceDiscount();
-        this.totalOrderPrice-=discount;
-        this.totalOrderPrice = round(this.totalOrderPrice);
+        this.totalOrderPrice = round(promotion.getTotalOrderPrice() - promotion.totalOrderPriceDiscount());
 
         System.out.println("----------------");
         System.out.println("Total: $" + (this.totalOrderPrice));
@@ -46,7 +37,7 @@ public class CoffeeShop {
     }
 
     public void printMenu() {
-        this.priceList.showPriceListMenu();
+        priceList.showPriceListMenu();
     }
 
     public double getTotalOrderPrice() {
