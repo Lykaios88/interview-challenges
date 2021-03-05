@@ -1,13 +1,12 @@
 package com.inatlas.challenge;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class Promotion {
 
     private double totalOrderPrice;
     private double totalOrderPriceDiscount = 0;
-    private List<String> promotionDiscount = new ArrayList<>();
+    private String promotionDiscount;
 
     public void applyPromotions(List<Product> orders, PriceList priceList) {
         this.totalOrderPrice = orders.stream().map(p -> Double.parseDouble(p.getPrice().split("\\$")[1])*(p.getQtt())).reduce(0.0, Double::sum);
@@ -54,7 +53,7 @@ public class Promotion {
     private void setPromotionDiscount (double discount, String descriptionDiscount){
         if (discount > totalOrderPriceDiscount){
             totalOrderPriceDiscount = discount;
-            promotionDiscount.add(0, descriptionDiscount);
+            promotionDiscount = descriptionDiscount;
         }
     }
 
@@ -68,8 +67,8 @@ public class Promotion {
 
     public void showAppliedPromotions(){
         if (totalOrderPriceDiscount > 0) {
-            System.out.println("--- Discount ---");
-            promotionDiscount.forEach(System.out::println);
+            System.out.println("\t--- Discount ---\n\t"+promotionDiscount);
+            System.out.println("\t----------------");
         }
     }
 }

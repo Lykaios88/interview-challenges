@@ -7,7 +7,7 @@ import java.util.*;
 public class CoffeeShop {
 
     private double totalOrderPrice;
-    private List<Product> orders = new ArrayList<>();
+    private HashMap < Client, List<Product>> orders = new HashMap<>();
     private PriceList priceList = new PriceList(Arrays.asList( new Product("Latte", "$ 5.3"),
                                                                new Product("Espresso", "$ 4"),
                                                                new Product("Sandwich", "$ 10.10")));
@@ -16,17 +16,21 @@ public class CoffeeShop {
         this.priceList.addPriceList(priceList);
     }
 
-    public void takeOrder(String product, Integer qtt) {
-        this.orders.add(new Product(product, qtt, priceList.getPriceToString(product)));
+    public void takeOrder(Client client, String product, Integer qtt) {
+        orders.get(client).add(new Product(product, qtt, priceList.getPriceToString(product)));
     }
 
-    public void printReceipt() {
+    public void newClient(Client client){
+        orders.put(client, new ArrayList<>());
+    }
+
+    public void printReceipt(Client client) {
         System.out.println("======================================");
-
+        System.out.println("Name of client "+ client.getName());
         Promotion promotion = new Promotion();
-        promotion.applyPromotions(this.orders, priceList);
+        promotion.applyPromotions(orders.get(client), priceList);
 
-        this.orders.forEach(p -> System.out.println(p.getQtt()+" "+ p));
+        orders.get(client).forEach(p -> System.out.println(p.getQtt()+" "+ p));
         promotion.showAppliedPromotions();
 
         this.totalOrderPrice = round(promotion.getTotalOrderPrice() - promotion.totalOrderPriceDiscount());
