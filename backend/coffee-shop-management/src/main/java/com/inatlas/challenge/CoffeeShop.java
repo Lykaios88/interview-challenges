@@ -40,6 +40,23 @@ public class CoffeeShop {
         System.out.println("======================================");
     }
 
+    public void pirntDailyReport (){
+        System.out.println("==========     Daily Report    =======");
+
+        double totalSpend=0.0;
+        for (Map.Entry<Client, List<Product>> e : orders.entrySet()) {
+
+        totalSpend+= e.getValue().stream().mapToDouble(p -> {
+               System.out.println(p.getQtt()+" "+ p);
+               return p.getPriceToDouble() * p.getQtt();
+           }).sum();
+       }
+
+        System.out.println(" Average per customer "+ round(totalSpend/orders.size()));
+
+        System.out.println("======================================");
+    }
+
     public void printMenu() {
         priceList.showPriceListMenu();
     }

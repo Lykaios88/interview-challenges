@@ -200,5 +200,6 @@ public class CoffeeShopTest {
         coffeeShop.takeOrder(client,"Capuccino", 1);
         coffeeShop.printReceipt(client);
         assertThat(coffeeShop.getTotalOrderPrice(),is(91.5) );
+        coffeeShop.pirntDailyReport();
     }
 }

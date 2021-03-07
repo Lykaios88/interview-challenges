@@ -9,10 +9,10 @@ public class Promotion {
     private String promotionDiscount;
 
     public void applyPromotions(List<Product> orders, PriceList priceList) {
-        this.totalOrderPrice = orders.stream().map(p -> Double.parseDouble(p.getPrice().split("\\$")[1])*(p.getQtt())).reduce(0.0, Double::sum);
+        this.totalOrderPrice = orders.stream().map(p -> p.getPriceToDouble()*(p.getQtt())).reduce(0.0, Double::sum);
         promotionEspresso(orders, priceList);
         promotionPercentDiscount(orders, 5);
-        promotionDrinksAndFood(orders, priceList, 3);
+        promotionDrinksAndFood(orders, priceList, 2.3);
     }
 
     private void promotionEspresso (List<Product> orders, PriceList priceList){
@@ -43,9 +43,9 @@ public class Promotion {
             boolean haveFood = orders.stream().anyMatch(p -> p.getProductType().equals("food"));
             boolean haveDrink = orders.stream().anyMatch(p -> p.getProductType().equals("drink"));
             if (haveFood && haveDrink){
-                int totalLattte  = orders.stream().filter(p -> p.getName().equals("Latte")).mapToInt(Product::getQtt).sum();
-                Double totalDiscount = (priceList.getPriceToDouble("Latte") - priceDiscount)* totalLattte;
-                setPromotionDiscount(totalDiscount, "Discount $ "+ totalDiscount+" new price Latte: "+priceDiscount);
+                double totalDiscountLattte  = orders.stream().filter(p -> p.getName().equals("Latte")).mapToInt(Product::getQtt).sum() * priceDiscount;
+                double newPrice = priceList.getPriceToDouble("Latte")-priceDiscount;
+                setPromotionDiscount(totalDiscountLattte, "Discount $ "+ totalDiscountLattte+" new price Latte: "+ newPrice);
             }
         }
     }

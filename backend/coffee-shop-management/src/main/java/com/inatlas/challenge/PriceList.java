@@ -19,18 +19,18 @@ public class PriceList {
     public String getPriceToString (String name){
         return priceListMenu.stream()
                                  .filter(p -> p.getName().equals(name))
-                                 .findAny().map(Product::getPrice).orElse("");
+                                 .findAny().map(Product::toString).orElse("");
     }
 
     public double getPriceToDouble (String name){
         Optional<Product> product = priceListMenu.stream().filter(p -> p.getName().equals(name)).findAny();
-        return product.map(value -> Double.parseDouble(value.getPrice().split("\\$")[1])).orElse(0.0);
+        return product.map(Product::getPriceToDouble).orElse(0.0);
     }
 
     public void showPriceListMenu(){
         System.out.println("********** PRICE LIST ****************");
         System.out.println("Product Name \t | \t Price");
-        priceListMenu.forEach( p-> System.out.println (p.getName()+" \t "+ p.getPrice()));
+        priceListMenu.forEach( p-> System.out.println (p.getName()+" \t "+ p.toString()));
         System.out.println("**************************************");
     }
 }
